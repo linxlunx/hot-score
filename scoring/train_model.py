@@ -5,11 +5,11 @@ import os
 model_path = 'model-dropout'
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-d", "--dataset", help="Dataset file", required=True)
+parser.add_argument("-f", "--file-processed", help="Compiled dataset image", required=True)
 args = parser.parse_args()
 
-if os.path.exists(args.dataset):
-    print('Cannot find dataset!')
+if os.path.exists(args.file_processed):
+    print('Cannot find compiled data!')
     sys.exit()
 
 from keras.models import Sequential
@@ -44,7 +44,7 @@ print(model.summary())
 sgd = SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(loss='kld', optimizer=sgd, metrics=['accuracy'])
 
-lable_distribution = pickle.load(open(args.dataset, 'rb'))
+lable_distribution = pickle.load(open(args.file_processed, 'rb'))
 
 train_X = np.array([x[1] for x in lable_distribution[0:len(lable_distribution)]])
 train_Y = np.array([x[2] for x in lable_distribution[0:len(lable_distribution)]])
