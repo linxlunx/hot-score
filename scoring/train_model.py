@@ -1,12 +1,3 @@
-from keras.models import Sequential
-from keras.applications.resnet50 import ResNet50
-from tensorflow.keras.layers import Dense
-from keras.optimizers import SGD
-from keras.callbacks import EarlyStopping
-import pickle
-import numpy as np
-from keras.layers import Dropout
-import keras.backend as K
 import argparse
 import sys
 import os
@@ -21,6 +12,15 @@ if os.path.exists(args.dataset):
     print('Cannot find dataset!')
     sys.exit()
 
+from keras.models import Sequential
+from keras.applications.resnet50 import ResNet50
+from tensorflow.keras.layers import Dense
+from keras.optimizers import SGD
+from keras.callbacks import EarlyStopping
+import pickle
+import numpy as np
+from keras.layers import Dropout
+import keras.backend as K
 
 def euclidean_distance_loss(y_true, y_pred):
     """
