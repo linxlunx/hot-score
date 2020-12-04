@@ -7,6 +7,9 @@ dataset/images/*
 labelled/*
 !labelled/.keep
 
+model-dropout/*
+!model-dropout/.keep
+
 .idea
 .vscode
 __pycache__
