@@ -40,7 +40,7 @@ datagen = ImageDataGenerator(
 
 
 def detectFace(detector,image_path, image_name):
-    imgAbsPath = image_path + image_name
+    imgAbsPath = '{}/{}'.format(image_path, image_name)
     img = cv2.imread(imgAbsPath)
     if img.ndim == 3:
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -59,8 +59,6 @@ def detectFace(detector,image_path, image_name):
         if resized_im.shape[0] != 224 or resized_im.shape[1] != 224:
             print("invalid shape")
 
-    else:
-        print(image_name+" error " + str(len(faces)))
     return resized_im
 
 
@@ -302,3 +300,5 @@ pickle.dump(train_label_distribution, open('{}/train_label_distribution.dat'.for
 
 random.shuffle(test_label_distribution)
 pickle.dump(test_label_distribution, open('{}/test_label_distribution.dat'.format(labelled_path), 'wb'))
+
+print('Data processing is completed, you can start training the data')
