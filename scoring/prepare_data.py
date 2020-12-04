@@ -221,7 +221,7 @@ pre_vote_image_score3_cnt = 0
 pre_vote_image_score4_cnt = 0
 pre_vote_image_score5_cnt = 0
 
-rating_file = open(rating_path + rating_file_name, 'r')
+rating_file = open('{}/{}'.format(rating_path, rating_file_name), 'r')
 
 lines = rating_file.readlines();
 lines.pop(0)
