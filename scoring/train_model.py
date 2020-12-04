@@ -8,7 +8,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--file-processed", help="Compiled dataset image", required=True)
 args = parser.parse_args()
 
-if os.path.exists(args.file_processed):
+if not os.path.exists(args.file_processed):
     print('Cannot find compiled data!')
     sys.exit()
 
