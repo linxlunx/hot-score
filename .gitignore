@@ -1,5 +1,12 @@
-dataset/*
-!dataset/.keep
+dataset/csv/*
+!dataset/csv/.keep
+
+dataset/images/*
+!dataset/images/.keep
+
+labelled/*
+!labelled/.keep
+
 .idea
 .vscode
 __pycache__
