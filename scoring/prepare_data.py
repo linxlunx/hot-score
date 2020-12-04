@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--file-rating", help="Rating file", required=True)
 args = parser.parse_args()
 
-rating_file_name = args.file_rating
+rating_file_name = args.file_rating.split('/')[-1]
 rating_path = "dataset/csv"
 
 if not os.path.exists('{}/{}'.format(rating_path, rating_file_name)):
