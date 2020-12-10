@@ -1,0 +1,10 @@
+mongodb:
+    image: mongo:4.4
+    ports:
+    - "27017:27017"
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ./mongodb/data/:/data/db/
+    - ./mongodb/mongodb.conf:/etc/mongodb.conf
+    - ./mongodb/export/:/export/
+    command: mongod --dbpath /data/db -f /etc/mongodb.conf

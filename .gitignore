@@ -13,3 +13,6 @@ model-dropout/*
 .idea
 .vscode
 __pycache__
+
+mongodb/*
+!mongodb/mongodb.conf
