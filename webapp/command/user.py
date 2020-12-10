@@ -2,6 +2,7 @@ from app import mongo, bcrypt
 from getpass import getpass
 from app.util.regex import valid_username, valid_email
 import sys
+import hashlib
 
 
 def create_superuser():
@@ -70,14 +71,15 @@ def create_superuser():
     user = mongo.db.users.insert({
         'username': username,
         'email': email,
-        'password': bcrypt.generate_password_hash(password),
+        'password': bcrypt.generate_password_hash(password).decode('utf-8'),
         'role': 'admin',
     })
 
     # copy collection
+    user_table = '{}_{}'.format(username, hashlib.md5(username.encode('utf-8')).hexdigest())
     pipeline = [
         {'$match': {}},
-        {'$out': str(user)},
+        {'$out': user_table},
     ]
     mongo.db.base_images.aggregate(pipeline)
 
