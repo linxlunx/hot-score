@@ -16,3 +16,8 @@ __pycache__
 
 webapp/mongodb/*
 !webapp/mongodb/mongodb.conf
+
+webapp/app/static/dataset/*
+!webapp/app/static/dataset/.keep
+
+config.py
