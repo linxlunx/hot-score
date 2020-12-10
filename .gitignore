@@ -14,5 +14,5 @@ model-dropout/*
 .vscode
 __pycache__
 
-mongodb/*
-!mongodb/mongodb.conf
+webapp/mongodb/*
+!webapp/mongodb/mongodb.conf
