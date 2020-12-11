@@ -73,6 +73,7 @@ def create_superuser():
         'email': email,
         'password': bcrypt.generate_password_hash(password).decode('utf-8'),
         'role': 'admin',
+        'active': True
     })
 
     # copy collection
