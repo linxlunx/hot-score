@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, render_template, flash
+from flask import Flask, redirect, request, render_template, flash, url_for
 from flask_pymongo import PyMongo
 from flask_script import Manager
 from flask_bcrypt import Bcrypt
@@ -20,7 +20,7 @@ bcrypt = Bcrypt(app)
 manager = Manager(app)
 
 login = LoginManager(app)
-login.login_view = 'login'
+login.login_view = 'auth_login'
 
 
 # login manager
@@ -89,6 +89,11 @@ class User:
     def logout():
         logout_user()
         return redirect('/auth/login')
+
+
+@app.route('/')
+def main_index():
+    return redirect(url_for('dashboard.index'))
 
 
 # register app
