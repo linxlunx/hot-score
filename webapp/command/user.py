@@ -83,5 +83,7 @@ def create_superuser():
         {'$out': user_table},
     ]
     mongo.db.base_images.aggregate(pipeline)
+    mongo.db[user_table].create_index('is_skipped', background=True)
+    mongo.db[user_table].create_index('is_labeled', background=True)
 
     print('Successfully created user {}'.format(username))

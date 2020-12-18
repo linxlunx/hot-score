@@ -30,7 +30,7 @@ def auth_login():
 
         if not user:
             flash('Invalid username or password')
-            return redirect('/auth/login')
+            return redirect(url_for('auth.login'))
 
         if User.check_password(user['password'], password):
             user_obj = User(username=user['username'])
