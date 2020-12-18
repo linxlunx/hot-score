@@ -9,7 +9,7 @@ login.login_view = '/auth/login'
 
 
 @auth.route('/login', methods=['GET', 'POST'])
-def auth_login():
+def login():
     if request.method == 'GET':
         if current_user.is_authenticated:
             return redirect(url_for('dashboard.index'))

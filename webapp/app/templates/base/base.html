@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Hot Score!</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -54,7 +54,7 @@
           <img src="{{ url_for('static', filename='img/my_avatar.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ data.username }}</a>
+          <a href="#" class="d-block">{{ my_user['username'] }}</a>
         </div>
       </div>
 
@@ -70,6 +70,28 @@
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
+                <i class="right fas"></i>
+              </p>
+            </a>
+          </li>
+        </ul>
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item menu-open">
+            <a href="{{ url_for('users.index') }}" class="nav-link {{ 'active' if request.endpoint.startswith('users') }}">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Users
+                <i class="right fas"></i>
+              </p>
+            </a>
+          </li>
+        </ul>
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item menu-open">
+            <a href="{{ url_for('auth.logout') }}" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Sign Out
                 <i class="right fas"></i>
               </p>
             </a>
@@ -113,7 +135,6 @@
 <script src="{{ url_for('static', filename='js/adminlte.js') }}"></script>
 <script>
   $(function() {
-        console.log(localStorage.getItem('collapsed'));
         if (!localStorage.getItem('collapsed')) {
             localStorage.setItem('collapsed', 'hide');
         } else {

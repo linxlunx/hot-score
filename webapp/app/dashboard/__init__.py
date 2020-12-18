@@ -8,8 +8,4 @@ dashboard = Blueprint('dashboard', __name__, url_prefix='/dashboard')
 @dashboard.route('/')
 @login_required
 def index():
-    username = current_user.username
-    print(username)
-    return render_template('dashboard/index.html', data={
-        'username': current_user.username
-    })
+    return render_template('dashboard/index.html')
