@@ -19,7 +19,42 @@
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          Rating
+          <div class="col-12">
+            <div class="card">
+              <div class="card-img-top">
+                <div class="text-center">
+                  <img src="{{ url_for('static', filename=data.image) }}" class="img-fluid">
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="text-center">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="rate" onclick="pushScore('{{ data._id}}', 1);">
+                    <label class="form-check-label">1</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="rate" onclick="pushScore('{{ data._id}}', 2)">
+                    <label class="form-check-label">2</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="rate" onclick="pushScore('{{ data._id}}', 3)">
+                    <label class="form-check-label">3</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="rate" onclick="pushScore('{{ data._id}}', 4)">
+                    <label class="form-check-label">4</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="rate" onclick="pushScore('{{ data._id}}', 5)">
+                    <label class="form-check-label">5</label>
+                  </div>
+
+                  <br/><br/>
+                  <input type="button" class="btn-primary" value="Skip!" onclick="skipFace('{{ data._id}}')"/>
+                </div>
+              </button>
+            </div>
+          </div>
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->

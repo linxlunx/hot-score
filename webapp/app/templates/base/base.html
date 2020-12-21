@@ -164,6 +164,33 @@
         });
   });
 
+  function pushScore(_id, rate) {
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('rating.rate_image')}}",
+      data: {
+        _id: _id,
+        rate: rate
+      },
+      success: function (data) {
+        location.reload();
+      }
+    });
+  }
+
+  function skipFace(_id) {
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('rating.skip_image')}}",
+      data: {
+        _id: _id,
+      },
+      success: function (data) {
+        location.reload();
+      }
+    });
+  }
+
 </script>
 </body>
 </html>
