@@ -2,6 +2,7 @@ from app import mongo, login
 from flask_login import login_user, logout_user, current_user
 from flask import request, redirect, render_template, flash, Blueprint, url_for
 from app.auth.models import User
+from app.auth.forms import LoginForm
 
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
@@ -13,18 +14,18 @@ def login():
     if request.method == 'GET':
         if current_user.is_authenticated:
             return redirect(url_for('dashboard.index'))
-        return render_template('auth/login.html')
+        form = LoginForm()
+        return render_template('auth/login.html', form=form)
 
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        form = LoginForm(request.form)
 
-        if not all([username, password]):
+        if not form.validate():
             flash('Please fill username/password')
             return redirect(url_for('auth.login'))
 
         user = mongo.db.users.find_one({'$and': [
-            {'username': username},
+            {'username': form.username.data},
             {'active': True}
         ]})
 
@@ -32,7 +33,7 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('auth.login'))
 
-        if User.check_password(user['password'], password):
+        if User.check_password(user['password'], form.password.data):
             user_obj = User(username=user['username'])
             login_user(user_obj)
             return redirect(url_for('dashboard.index'))
