@@ -2,8 +2,7 @@ from app import bcrypt
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import login_required
 from app.users.services import UserService
-from app.users.forms import UserEditRegistrationForm
-
+from app.users.forms import UserEditForm, UserAddForm
 
 
 users = Blueprint('users', __name__, url_prefix='/users')
@@ -14,6 +13,40 @@ users = Blueprint('users', __name__, url_prefix='/users')
 def index():
     u = UserService()
     return render_template('users/index.html', users=u.user_list())
+
+
+@users.route('/add', methods=['GET', 'POST'])
+@login_required
+def add():
+    u = UserService()
+    if u.role != 'admin':
+        return redirect(url_for('users.index'))
+    if request.method == 'GET':
+        form = UserAddForm()
+        return render_template('users/add.html', form=form)
+    if request.method == 'POST':
+        form = UserAddForm(request.form)
+
+        if not form.validate():
+            return render_template('users/add.html', form=form)
+
+        if u.user_get(form.username.data):
+            form.username.errors.append("Please use another username")
+            return render_template('users/add.html', form=form)
+
+        if u.email_is_exist(form.email.data):
+            form.email.errors.append("Please use another email")
+            return render_template('users/add.html', form=form)
+
+        u.user_store({
+            'username': form.username.data,
+            'email': form.email.data,
+            'password': bcrypt.generate_password_hash(form.password.data).decode('utf-8'),
+            'role': form.role.data,
+            'active': True if form.status.data == 'active' else False,
+        })
+
+        return redirect(url_for('users.index'))
 
 
 @users.route('/edit/<username>', methods=['GET', 'POST'])
@@ -29,12 +62,12 @@ def edit(username):
                 status = 'active'
             else:
                 status = 'inactive'
-            form = UserEditRegistrationForm(email=user['email'], role=user['role'], status=status)
+            form = UserEditForm(email=user['email'], role=user['role'], status=status)
         else:
-            form = UserEditRegistrationForm(email=user['email'])
+            form = UserEditForm(email=user['email'])
         return render_template('users/edit.html', user=user, form=form)
     if request.method == 'POST':
-        form = UserEditRegistrationForm(request.form)
+        form = UserEditForm(request.form)
         if form.validate():
             if form.password.data:
                 if not form.password.data:
@@ -44,7 +77,7 @@ def edit(username):
                     return render_template('users/edit.html', user=user, form=form)
 
             u = UserService()
-            if u.check_email(form.email.data, user):
+            if u.check_email_change(form.email.data, user):
                 form.email.errors.append("Please use another email!")
                 return render_template('users/edit.html', user=user, form=form)
 

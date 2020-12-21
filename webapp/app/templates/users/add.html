@@ -1,0 +1,104 @@
+{% extends 'base/base.html' %}
+{% block body %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Users</h1>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Add User</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form method="POST">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="inputUsername">Username</label>
+                    {{ form.username(class_='form-control') }}
+                    {% if form %}
+                      {% if 'username' in form.errors %}
+                        <span class="error invalid-feedback" style="display:block;">{{form.errors['username'][0]}}</span>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <label>Email</label>
+                    {{ form.email(class_='form-control') }}
+                    {% if form %}
+                      {% if 'email' in form.errors %}
+                        <span class="error invalid-feedback" style="display:block;">{{form.errors['email'][0]}}</span>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <label>Password</label>
+                    {{ form.password(class_='form-control') }}
+                    {% if form %}
+                      {% if 'password' in form.errors %}
+                        <span class="error invalid-feedback" style="display:block;">{{form.errors['password'][0]}}</span>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <label>Confirm Password</label>
+                    {{ form.confirm(class_='form-control') }}
+                    {% if form %}
+                      {% if 'confirm' in form.errors %}
+                        <span class="error invalid-feedback" style="display:block;">{{form.errors['confirm'][0]}}</span>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                  {% if my_user['role'] == 'admin' %}
+                    <div clas="form-group">
+                      <label>Role</label>
+                      {{ form.role(class_='form-control') }}
+                      {% if form %}
+                        {% if 'role' in form.errors %}
+                          <span class="error invalid-feedback" style="display:block;">{{form.errors['role'][0]}}</span>
+                        {% endif %}
+                      {% endif %}
+                    </div>
+
+                    <div clas="form-group">
+                      <label>Status</label>
+                      {{ form.status(class_='form-control') }}
+                      {% if form %}
+                        {% if 'status' in form.errors %}
+                          <span class="error invalid-feedback" style="display:block;">{{form.errors['status'][0]}}</span>
+                        {% endif %}
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+{% endblock %}

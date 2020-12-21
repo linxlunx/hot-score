@@ -1,5 +1,6 @@
 from app import mongo
 from flask_login import current_user
+import hashlib
 
 
 class UserService():
@@ -42,8 +43,31 @@ class UserService():
         })
         return True
 
-    def check_email(self, email, user):
+    def user_store(self, data):
+        if self.role != 'admin':
+            return False
+        # insert user
+        mongo.db.users.insert(data)
+
+        # copy collection data
+        user_table = '{}_{}'.format(data['username'], hashlib.md5(data['username'].encode('utf-8')).hexdigest())
+        pipeline = [
+            {'$match': {}},
+            {'$out': user_table},
+        ]
+        mongo.db.base_images.aggregate(pipeline)
+        mongo.db[user_table].create_index('is_skipped', background=True)
+        mongo.db[user_table].create_index('is_labeled', background=True)
+        return True
+
+    def email_is_exist(self, email):
         email_exist = mongo.db.users.find_one({'active': True, 'email': email})
+        if not email_exist:
+            return False
+        return email_exist
+
+    def check_email_change(self, email, user):
+        email_exist = self.email_is_exist(email)
         if not email_exist:
             return False
 
@@ -52,3 +76,5 @@ class UserService():
                 return True
             else:
                 return False
+
+
