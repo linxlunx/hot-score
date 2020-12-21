@@ -39,9 +39,11 @@ def inject_user():
 from app.auth import auth
 from app.dashboard import dashboard
 from app.users import users
+from app.rating import rating
 
 
 # register app
 app.register_blueprint(auth)
 app.register_blueprint(dashboard)
 app.register_blueprint(users)
+app.register_blueprint(rating)

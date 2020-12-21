@@ -3,7 +3,7 @@ from flask_login import current_user
 import hashlib
 
 
-class UserService():
+class UserService:
     def __init__(self):
         self.user = mongo.db.users.find_one({'username': current_user.username})
         self.role = self.user['role']
